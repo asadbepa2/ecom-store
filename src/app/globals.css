@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1d1d1f;
+  --color-muted: #6e6e73;
+  --color-line: #e8e8ed;
+  --color-snow: #fbfbfd;
+  --font-body: var(--font-montserrat), "system-ui", sans-serif;
+  --font-heading: var(--font-playfair), Georgia, serif;
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; }
+  body { @apply bg-white font-body text-ink; }
+  h1, h2, h3, h4 { @apply font-heading tracking-tight; }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-ink; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-full bg-ink px-7 py-3 text-sm font-medium text-white transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-2.5 text-sm font-medium text-ink transition hover:border-ink; }
+  .input { @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted/60 focus:border-ink; }
+  .label { @apply mb-1.5 block text-xs font-medium text-muted; }
+  .container-x { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+}

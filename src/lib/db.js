@@ -1,6 +1,15 @@
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "./firebase";
-
+export function clearProductCache() {
+  if (typeof window !== "undefined") {
+    // Clear all product-related local storage caches
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith("store_products") || key.startsWith("store_product_")) {
+        localStorage.removeItem(key);
+      }
+    });
+  }
+}
 export async function getProducts(max) {
   const cacheKey = max ? `store_products_max_${max}` : "store_products_all";
 

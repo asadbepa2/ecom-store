@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
-import { getProducts } from "@/lib/db";
+import { getProducts, clearProductCache } from "@/lib/db"; // 1. Import clearProductCache
 import { formatPrice } from "@/lib/utils";
 
 const empty = { title: "", price: "", description: "", imageUrl: "" };
@@ -38,6 +38,7 @@ export default function ProductManager() {
         imageUrl,
         createdAt: serverTimestamp(),
       });
+      clearProductCache(); // 2. Clear cache when adding a new product too
       setForm(empty);
       setFile(null);
       e.target.reset();
@@ -50,8 +51,14 @@ export default function ProductManager() {
 
   async function remove(p) {
     if (!confirm(`Delete "${p.title}"? This cannot be undone.`)) return;
+    
     await deleteDoc(doc(db, "products", p.id));
-    load();
+    
+    // 3. THE FIX: Wipe local storage cache so it doesn't reload old data
+    clearProductCache(); 
+    
+    // 4. Instantly remove it from the screen state
+    setProducts((prev) => prev.filter((item) => item.id !== p.id));
   }
 
   return (

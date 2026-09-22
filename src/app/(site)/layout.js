@@ -3,8 +3,8 @@ import Footer from "@/components/Footer";
 import "@/app/globals.css"; // Fixed path using the @ alias
 
 export const metadata = {
-  title: "Meher Store",
-  description: "Minimalist e-commerce store",
+  title: "Elevyn Premium",
+  description: "Elevyn Premium, Minimalist e-commerce store",
   manifest: "/site.webmanifest",
   icons: {
     icon: [
